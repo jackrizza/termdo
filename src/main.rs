@@ -22,9 +22,9 @@ fn print_todo(array: Vec<Todo>) {
             x.id,
             x.desc.unwrap(),
             match x.action {
-                0 => "Not Complete",
-                1 => "Complete",
-                _ => "Not Complete",
+                0 => "\u{2610}",
+                1 => "\u{2713}",
+                _ => "\u{2610}",
             }
         );
     }
