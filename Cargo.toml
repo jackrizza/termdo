@@ -1,0 +1,7 @@
+[package]
+name = "struct-todo"
+version = "0.1.0"
+authors = ["jackrizza <jackrizza@gmail.com>"]
+
+[dependencies]
+mysql = "*"
