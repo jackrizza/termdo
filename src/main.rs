@@ -32,14 +32,14 @@ fn print_todo(array: Vec<Todo>) {
 }
 
 fn main() {
-    let pool = my::Pool::new("mysql://rust:rust@localhost:3306/rust_todo").unwrap();
+    let pool = my::Pool::new("mysql://rust:rust@localhost:3306/rust").unwrap();
     let args: Vec<String> = env::args().collect();
     match args.len() {
         2 => {
             let cmd = &args[1];
             match &cmd[..] {
                 "view" => {
-                    let db_todo: Vec<Todo> = pool.prep_exec("SELECT * from todo_list", ())
+                    let db_todo: Vec<Todo> = pool.prep_exec("SELECT * from rust_todo", ())
                         .map(|result| {
                             result
                                 .map(|x| x.unwrap())
@@ -64,13 +64,13 @@ fn main() {
             let item = &args[2];
             match &cmd[..] {
                 "add" => {
-                    pool.prep_exec(r#"INSERT INTO `rust_todo`.`todo_list` (`desc`, `action`) VALUES (:desc, '0');"#, params!{"desc" => &item}).unwrap();
+                    pool.prep_exec(r#"INSERT INTO rust_todo (`desc`, `action`) VALUES (:desc, '0');"#, params!{"desc" => &item}).unwrap();
                 },
                 "complete" => {
-                    pool.prep_exec(r#"UPDATE todo_list SET action = 1 WHERE id = :id;"#, params!{"id" => &item}).unwrap();
+                    pool.prep_exec(r#"UPDATE rust_todo SET action = 1 WHERE id = :id;"#, params!{"id" => &item}).unwrap();
                 },
                 "remove" => {
-                    pool.prep_exec(r#"DELETE FROM todo_list WHERE id = :id;"#, params!{"id" => &item}).unwrap();
+                    pool.prep_exec(r#"DELETE FROM rust_todo WHERE id = :id;"#, params!{"id" => &item}).unwrap();
                 },
                 _ => {
                     eprintln!("error: invalid command");
